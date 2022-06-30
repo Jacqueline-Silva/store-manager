@@ -51,20 +51,11 @@ describe('ProductsService', () => {
         expect(result).to.be.equal(allProducts[0]);
       });
     it('ao enviar um "id" inválido, retorna um erro', async () => {
-      const error = { Error: 'Product not found'};
-      
       sinon.stub(ProductsModel, 'getProductId').resolves(undefined);
 
-      const result = await ProductsService.getProductId(5);
+      const result = ProductsService.getProductId(5);
    
-      // const err = () => {
-      //   throw new Error('Product not found');
-      // }
-
-      // expect(result).to.throw();
-      // expect(result).to.throws();
-      // expect(result).to.eventually.be.rejected
-      expect(result).to.be.rejectedWith(error)
+      expect(result).to.be.rejectedWith(Error)
     });
   });
 
