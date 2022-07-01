@@ -2,6 +2,7 @@ const express = require('express');
 const rescue = require('express-rescue');
 const bodyParser = require('body-parser');
 const ProductsController = require('./controllers/ProductController');
+const SalesController = require('./controllers/SalesController');
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,6 +15,9 @@ app.get('/', (_request, response) => {
 app.get('/products', rescue(ProductsController.getAllProducts));
 app.get('/products/:id', rescue(ProductsController.getProductId));
 app.post('/products', rescue(ProductsController.postProducts));
+
+app.get('/sales', rescue(SalesController.getAllSales));
+app.get('/sales/:id', rescue(SalesController.getSalesId));
 
 app.use((err, _req, res, _next) => {
   const { name, code, message } = err;
