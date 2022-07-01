@@ -12,9 +12,7 @@ describe('ProductsService', () => {
   });
 
   const newProductName = 'ProductX';
-  const newProductNameError = 'PX';
   const newProduct = { id: 5, name: 'ProductX' };
-  const newProductError = { id: 2, name: 'ProductX' };
 
   const allProducts = [
     {
@@ -57,7 +55,6 @@ describe('ProductsService', () => {
       });
     it('ao enviar um "id" inválido, retorna um erro', async () => {
       sinon.stub(ProductsModel, 'getProductId').resolves(undefined);
-
       const result = ProductsService.getProductId(5);
    
       expect(result).to.be.rejectedWith(Error)

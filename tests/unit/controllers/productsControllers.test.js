@@ -8,6 +8,9 @@ describe('ProductsController', () => {
     sinon.restore();
   });
 
+  const newProductName = 'ProductX';
+  const newProduct = { id: 5, name: 'ProductX' };
+
   const allProducts = [
     {
       "id": 1,
@@ -31,7 +34,6 @@ describe('ProductsController', () => {
 
       await ProductsController.getAllProducts(req, res);
 
-
       expect(res.status.calledWith(200)).to.be.true;
     });
     
@@ -49,7 +51,6 @@ describe('ProductsController', () => {
 
       await ProductsController.getProductId(req, res);
 
-
       expect(res.status.calledWith(200)).to.be.true;
     });
     it('retorna o produto esperado', async () => {
@@ -64,6 +65,24 @@ describe('ProductsController', () => {
       await ProductsController.getProductId(req, res);
 
       expect(res.json.calledWith(allProducts[0])).to.be.true;
+    });
+  });
+
+  describe('#postProducts', () => {
+    it('ao enviar um "name" válido, retorna status 201', async () => {
+      const req = { body: { name: newProductName }};
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      await ProductsService.validateBody(req.body);
+
+      sinon.stub(ProductsService, 'postProducts').resolves(newProduct);
+
+      await ProductsController.postProducts(req, res);
+
+      expect(res.status.calledWith(201)).to.be.true;
     });
   });
   
