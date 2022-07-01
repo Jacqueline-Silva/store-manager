@@ -14,6 +14,8 @@ const ProductsController = {
   },
   postProducts: async (req, res) => {
     const { name } = req.body;
+    await ProductsService.validateBody(req.body);
+
     const newProduct = await ProductsService.postProducts(name);
 
     res.status(201).json(newProduct);

@@ -16,10 +16,11 @@ app.get('/products/:id', rescue(ProductsController.getProductId));
 app.post('/products', rescue(ProductsController.postProducts));
 
 app.use((err, _req, res, _next) => {
-  const { name, message } = err;
+  const { name, code, message } = err;
 
   switch (name) {
     case 'Error': res.status(404).json({ message }); break;
+    case 'ValidationError': res.status(code).json({ message }); break;
     default: res.status(500).json({ message });
   }
 });
