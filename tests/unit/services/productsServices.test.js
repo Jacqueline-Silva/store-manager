@@ -11,6 +11,11 @@ describe('ProductsService', () => {
     sinon.restore();
   });
 
+  const newProductName = 'ProductX';
+  const newProductNameError = 'PX';
+  const newProduct = { id: 5, name: 'ProductX' };
+  const newProductError = { id: 2, name: 'ProductX' };
+
   const allProducts = [
     {
       "id": 1,
@@ -56,6 +61,21 @@ describe('ProductsService', () => {
       const result = ProductsService.getProductId(5);
    
       expect(result).to.be.rejectedWith(Error)
+    });
+  });
+
+  describe('#postProducts', () => {
+    it('ao enviar um "name" válido, retorna um objeto', async () => {
+      sinon.stub(ProductsModel, 'postProducts').resolves(newProduct);
+      const result = await ProductsService.postProducts(newProductName);
+
+      expect(result).to.be.a('object');
+    });
+    it('ao enviar um "name" válido, retorna o produto cadastrado', async () => {
+      sinon.stub(ProductsModel, 'postProducts').resolves(newProduct);
+      const result = await ProductsService.postProducts(newProductName);
+
+      expect(result).to.be.deep.equal(newProduct);
     });
   });
 
