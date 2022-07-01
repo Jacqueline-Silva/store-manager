@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const ProductsModel = require('../models/ProductModel');
-const { runSchema } = require('./runSchema');
+const { runSchema } = require('../error/runSchema');
 
 const ProductsService = {
   validateBody: runSchema(
