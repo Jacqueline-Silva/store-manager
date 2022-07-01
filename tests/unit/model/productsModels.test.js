@@ -19,6 +19,9 @@ describe('ProductsModel', () => {
     }
   ];
   
+  const newProductName = 'ProductX';
+  const newProduct = { id: 5, name: 'ProductX' };
+  
   describe('#getAllProducts', () => {
     it('retorna array de produtos', async () => {
       sinon.stub(connection, 'execute').resolves([allProducts]);
@@ -54,5 +57,20 @@ describe('ProductsModel', () => {
       expect(result).to.be.undefined;
     });
   });
+
+  describe('#postProducts', () => {
+    it('retorna um objeto', async () => {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 5 }]);
+      const result = await ProductsModel.postProducts(newProductName);
+
+      expect(result).to.be.a('object');
+    });
+    it('retorna o novo produto cadastrado', async () => {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 5 }]);
+      const result = await ProductsModel.postProducts(newProductName);
+
+      expect(result).to.be.deep.equal(newProduct);
+    });
+  })
 
 });
