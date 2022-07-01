@@ -1,8 +1,10 @@
 const express = require('express');
 const rescue = require('express-rescue');
+const bodyParser = require('body-parser');
 const ProductsController = require('./controllers/ProductController');
 
 const app = express();
+app.use(bodyParser.json());
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -11,6 +13,7 @@ app.get('/', (_request, response) => {
 
 app.get('/products', rescue(ProductsController.getAllProducts));
 app.get('/products/:id', rescue(ProductsController.getProductId));
+app.post('/products', rescue(ProductsController.postProducts));
 
 app.use((err, _req, res, _next) => {
   const { name, message } = err;
