@@ -33,6 +33,13 @@ const ProductsService = {
 
     return updateProduct;
   },
+  deleteProduct: async (id) => {
+    const productId = await ProductsModel.getProductId(id);
+
+    if (!productId) throw new Error('Product not found');
+
+    await ProductsModel.deleteProduct(id);
+  },
 };
 
 module.exports = ProductsService;

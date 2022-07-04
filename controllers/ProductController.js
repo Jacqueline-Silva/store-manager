@@ -30,6 +30,13 @@ const ProductsController = {
 
     res.status(200).json(updateProduct);
   },
+  deleteProduct: async (req, res) => {
+    const { id } = req.params;
+
+    await ProductsService.deleteProduct(id);
+
+    res.sendStatus(204);
+  },
 };
 
 module.exports = ProductsController;
