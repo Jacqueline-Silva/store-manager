@@ -13,6 +13,7 @@ describe('ProductsService', () => {
 
   const newProductName = 'ProductX';
   const newProduct = { id: 5, name: 'ProductX' };
+  const productAtt = { id: 5, name: 'ProductY' };
 
   const allProducts = [
     {
@@ -73,6 +74,45 @@ describe('ProductsService', () => {
       const result = await ProductsService.postProducts(newProductName);
 
       expect(result).to.be.deep.equal(newProduct);
+    });
+  });
+
+  describe('#putProduct', () => {
+    it('ao enviar o "id", retorna um objeto', async () => {
+      sinon.stub(ProductsModel, 'getProductId').resolves(newProduct)
+      sinon.stub(ProductsModel, 'putProduct').resolves(productAtt);
+      const result = await ProductsService.putProduct(5, 'ProductY');
+
+      expect(result).to.be.a('object');
+    });
+    it('ao enviar o "id", retorna o produto atualizado', async () => {
+      sinon.stub(ProductsModel, 'getProductId').resolves(newProduct)
+      sinon.stub(ProductsModel, 'putProduct').resolves(productAtt);
+      const result = await ProductsService.putProduct(5, 'ProductY');
+
+      expect(result).to.be.deep.equal(productAtt);
+    });
+    it('ao enviar "id" inexistente, retorna um erro', async () => {
+      sinon.stub(ProductsModel, 'getProductId').returns(undefined);
+      const result = ProductsService.putProduct(5, 'ProductY');
+
+      expect(result).to.be.rejectedWith(Error);
+    });
+  });
+
+  describe('#deleteProduct', () => {
+    it('ao deletar um produto não retorna nenhum objeto', async () => {
+      sinon.stub(ProductsModel, 'getProductId').resolves(newProduct)
+      sinon.stub(ProductsModel, 'deleteProduct').returns();
+      const result = await ProductsService.deleteProduct(5);
+
+      expect(result).to.be.not.a('object');
+    });
+    it('ao enviar "id" inexistente, retorna um erro', async () => {
+      sinon.stub(ProductsModel, 'getProductId').returns(undefined);
+      const result = ProductsService.deleteProduct(5);
+
+      expect(result).to.be.rejectedWith(Error);
     });
   });
 
