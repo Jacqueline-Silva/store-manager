@@ -73,4 +73,29 @@ describe('ProductsModel', () => {
     });
   })
 
+  describe('#putProduct', () => {
+    it('retorna um objeto', async () => {
+      const result = await ProductsModel.putProduct(5, 'ProductY');
+
+      expect(result).to.be.a('object');
+    });
+    it('retorna o produto com o nome atualizado', async () => {
+      const productAtt = { id: 5, name: 'ProductY' };
+
+      const result = await ProductsModel.putProduct(5, 'ProductY');
+
+      expect(result).to.be.deep.equal(productAtt);
+    });
+  });
+
+  describe('#deleteProduct', () => {
+    it('ao deletar um produto não retorna nenhum objeto', async () => {
+      sinon.stub(connection, 'execute').returns();
+      const result = await ProductsModel.deleteProduct(5);
+
+      expect(result).to.be.not.a('object');
+    });
+
+  });
+
 });
