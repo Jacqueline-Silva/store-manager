@@ -30,6 +30,13 @@ const SalesService = {
 
     return result;
   },
+  deleteSale: async (id) => {
+    const saleId = await SalesModel.getSalesId(id);
+
+    if (!saleId || saleId.length === 0) throw new Error('Sale not found');
+
+    await SalesModel.deleteSale(id);
+  },
 };
 
 module.exports = SalesService;
