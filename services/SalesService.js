@@ -37,6 +37,18 @@ const SalesService = {
 
     await SalesModel.deleteSale(id);
   },
+  putSale: async (id, saleUpdate) => {
+    const saleId = await SalesModel.getSalesId(id);
+
+    if (!saleId || saleId.length === 0) throw new Error('Sale not found');
+
+    await Promise.all(saleUpdate.map(async (sale) =>
+      SalesModel.putSale(id, sale)));
+    
+    const getSaleUp = await SalesModel.getSalesId(id);
+
+    return { saleId: id, itemsUpdated: getSaleUp };
+  },
 };
 
 module.exports = SalesService;

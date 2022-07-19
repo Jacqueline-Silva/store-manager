@@ -1,3 +1,4 @@
+const ProductsService = require('../services/ProductService');
 const SalesService = require('../services/SalesService');
 
 const SalesController = {
@@ -27,6 +28,17 @@ const SalesController = {
     await SalesService.deleteSale(id);
 
     res.sendStatus(204);
+  },
+  putSale: async (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+
+    await SalesService.validateBody(...updates);
+    await Promise.all(updates.map(({ productId }) => ProductsService.getProductId(productId)));
+
+    const updateSales = await SalesService.putSale(+id, updates);
+
+    res.status(200).json(updateSales);
   },
 };
 

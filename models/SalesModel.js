@@ -52,6 +52,16 @@ const SalesModel = {
     const query = 'DELETE FROM StoreManager.sales WHERE id = (?);';
     await connection.execute(query, [id]);
   },
+  putSale: async (id, saleUpdate) => {
+    const { productId, quantity } = saleUpdate;
+
+    const query = `
+    UPDATE StoreManager.sales_products
+      SET product_id = (?), quantity = (?)
+      WHERE sale_id = (?) AND product_id = (?);`;
+    
+    await connection.execute(query, [productId, quantity, id, productId]);
+  },
 };
 
 module.exports = SalesModel;

@@ -22,6 +22,7 @@ app.get('/sales', rescue(SalesController.getAllSales));
 app.get('/sales/:id', rescue(SalesController.getSalesId));
 app.post('/sales', rescue(SalesController.postSales));
 app.delete('/sales/:id', rescue(SalesController.deleteSale));
+app.put('/sales/:id', rescue(SalesController.putSale));
 
 app.use((err, _req, res, _next) => {
   const { name, code, message } = err;
