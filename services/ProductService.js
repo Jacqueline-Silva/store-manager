@@ -40,6 +40,13 @@ const ProductsService = {
 
     await ProductsModel.deleteProduct(id);
   },
+  searchProduct: async (productName) => {
+    const product = await ProductsModel.searchProduct(productName);
+
+    if (!product) throw new Error('Product not found');
+
+    return product;
+  },
 };
 
 module.exports = ProductsService;

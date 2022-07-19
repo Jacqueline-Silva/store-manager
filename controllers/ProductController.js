@@ -37,6 +37,13 @@ const ProductsController = {
 
     res.sendStatus(204);
   },
+  searchProduct: async (req, res) => {
+    const { q } = req.query;
+
+    const productSelected = await ProductsService.searchProduct(q);
+
+    res.status(200).json(productSelected);
+  },
 };
 
 module.exports = ProductsController;
