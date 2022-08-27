@@ -13,8 +13,8 @@
     "start": "node index.js",
     "debug": "nodemon --ignore coverage index.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js, .jsx",
-    "migration": "node -e \"require('./__tests__/_utils').runMigration()\"",
-    "seed": "node -e \"require('./__tests__/_utils').runSeed()\""
+    "migration": "node -e \"require('./db/utils/connectUtils.js').runMigration()\"",
+    "seed": "node -e \"require('./db/utils/connectUtils.js').runSeed()\""
   },
   "repository": {
     "type": "git",
